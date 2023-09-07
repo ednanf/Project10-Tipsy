@@ -17,6 +17,7 @@ class CalculatorViewController: UIViewController {
     @IBOutlet var splitNumberLabel: UILabel!
     
     var tip = 0.0
+    var tipPercentage = ""
     var numberOfPeople = 2
     var billTotal = 0.0
     var splitValue = ""
@@ -29,6 +30,9 @@ class CalculatorViewController: UIViewController {
         
         // Select only the tapped button
         sender.isSelected = true
+        
+        // Store the tip % as a global variable to pass to the other ViewController
+        tipPercentage = sender.titleLabel!.text!
         
         // Get the tip amount, drop "%" and convert to double (since the value will be < 1)
         let tipAmount = Double(((sender.titleLabel?.text)?.dropLast())!)
@@ -69,6 +73,17 @@ class CalculatorViewController: UIViewController {
             // Store the final, formatted value in a global variable
             splitValue = formattedTotal
             
+            performSegue(withIdentifier: "toResults", sender: self)
+        }
+    }
+    
+    // Send the value to the other view
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toResults" {
+            let destinationVC = segue.destination as! ResultsViewController
+            destinationVC.perPerson = splitValue
+            destinationVC.numberOfPeople = String(numberOfPeople)
+            destinationVC.tipPercentage = String(tipPercentage)
         }
     }
 }
