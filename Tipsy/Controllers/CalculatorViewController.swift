@@ -19,6 +19,7 @@ class CalculatorViewController: UIViewController {
     var tip = 0.0
     var numberOfPeople = 2
     var billTotal = 0.0
+    var splitValue = ""
     
     @IBAction func tipChanged(_ sender: UIButton) {
         // Clear previous selection
@@ -57,6 +58,7 @@ class CalculatorViewController: UIViewController {
         
         // Check performed to prevent crashes
         if bill != "" {
+            
             // Convert the bill to a Double and store in the global variable
             billTotal = Double(bill)!
             
@@ -64,7 +66,8 @@ class CalculatorViewController: UIViewController {
             
             let formattedTotal = String(format: "%.2f", total)
             
-            print(formattedTotal)
+            // Store the final, formatted value in a global variable
+            splitValue = formattedTotal
             
         }
     }
